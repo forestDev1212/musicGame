@@ -6093,18 +6093,26 @@ fieldset {
 }
 
 header .header {
+  margin: auto;
   font-family: "Yu Mincho", sans-serif;
-  height: 20vh;
-  font-size: 10rem !important;
+  height: 10vh;
+  font-size: 40rem !important;
+  color: #f57f11;
 }
 header .header .logo {
   padding: 32px 24px 0px;
   font-size: 32px;
 }
+header .header .wrap_rl {
+  width: 100%;
+  height: 100%;
+  align-items: center;
+}
 header .header li {
   display: inline;
   padding: 0px 30px;
   font-size: 19px;
+  gap: 25rem;
 }
 header .header li:last-child {
   padding-right: 0;
