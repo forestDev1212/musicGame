@@ -1,0 +1,32 @@
+header {
+    // margin: 0px;
+    // .logo {
+    //     padding: 32px 24px 0px;
+    //     font-size: 32pt;
+    // }
+    // .header_menu {
+        
+    // }
+    .header {
+        display: flex;
+        justify-content: space-between;
+        font-family: $font_noto;
+
+        .logo {
+            padding: 32px 24px 0px;
+            font-size: 32px;
+        }
+
+        .menu {
+            padding: 54px 115px 0px 0px;
+            li {
+                float: left;
+                padding: 0px 30px;
+                font-size: 19px;
+                &:last-child {
+                    padding-right: 0;
+                }
+            }
+        }
+    }
+}
