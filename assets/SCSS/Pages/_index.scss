@@ -1,3 +1,78 @@
+
+.loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url("/assets/images/background/orange-bg.jpg");
+    z-index: 999999;
+}
+.bg_content {
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url("/assets/images/background/Jayde-Musica-Blank.jpg");
+}
+
+section {
+    padding: 0px 10%;
+}
+
+
+
+.first_section {
+    padding: 100px 0px 0px 0px;
+    position: relative;
+
+    .container {
+        position: relative;
+        .centered {
+            position: absolute;
+            color: #F7F7F7;
+            font-family: Hiragino Mincho ProN;
+            font-size: 44px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 30px 80px;
+            &.image_content {
+                opacity: 58%;
+            }
+        }
+    }
+    span {
+        font-size: 114px;
+    }
+
+    .about_title {
+        position: relative;
+        right: -750px;
+        top: -490px;
+    }
+
+    .image {
+        width: 52%;
+    }
+
+    .sec_image {
+        visibility: visible;
+        position: absolute;
+        top: 230px;
+        right: 100px;
+    }
+
+    .blanc_title {
+        position: relative;
+        top: 30px;
+        right: 550px;
+    }
+}
+
+
 // .section-mv {
 //     position: relative;
 
@@ -182,62 +257,3 @@
 //         }
 //     }
 // }
-.bg_content {
-    width: 100%;
-    height: 100%;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-image: url("/assets/images/background/Jayde-Musica-Blank.jpg");
-}
-
-section {
-    padding: 0px 10%;
-}
-
-.first_section {
-    padding: 100px 0px 0px 0px;
-    position: relative;
-
-    .container {
-        position: relative;
-        .centered {
-            position: absolute;
-            color: #F7F7F7;
-            font-family: Hiragino Mincho ProN;
-            font-size: 44px;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            padding: 30px 80px;
-            &.image_content {
-                opacity: 58%;
-            }
-        }
-    }
-    span {
-        font-size: 114px;
-    }
-
-    .about_title {
-        position: relative;
-        right: -750px;
-        top: -490px;
-    }
-
-    .image {
-        width: 52%;
-    }
-
-    .sec_image {
-        visibility: visible;
-        position: absolute;
-        top: 230px;
-        right: 100px;
-    }
-
-    .blanc_title {
-        position: relative;
-        top: 30px;
-        right: 550px;
-    }
-}

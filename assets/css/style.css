@@ -1,3 +1,34 @@
-.total-content {
-  background-image: url("../images/background/orange-bg.jpg");
+body {
+  width: 100%;
+  height: 100%;
+  max-width: 1600 !important;
+  max-height: 1020 !important;
+  padding: 0;
+  margin: 0;
+  font-family: "fot-tsukuaoldmin-pr6n", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+  font-size: 19rem;
+  line-height: 46rem;
+}
+
+
+.bg_content {
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url("/assets/images/background/Jayde-Musica-Blank.jpg");
+}
+
+.loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url("/assets/images/background/orange-bg.jpg");
+  z-index: 999999;
 }

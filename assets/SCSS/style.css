@@ -6093,24 +6093,33 @@ fieldset {
 }
 
 header .header {
-  display: flex;
-  justify-content: space-between;
   font-family: "Yu Mincho", sans-serif;
+  height: 20vh;
+  font-size: 10rem !important;
 }
 header .header .logo {
   padding: 32px 24px 0px;
   font-size: 32px;
 }
-header .header .menu {
-  padding: 54px 115px 0px 0px;
-}
-header .header .menu li {
-  float: left;
+header .header li {
+  display: inline;
   padding: 0px 30px;
   font-size: 19px;
 }
-header .header .menu li:last-child {
+header .header li:last-child {
   padding-right: 0;
+}
+
+.loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url("/assets/images/background/orange-bg.jpg");
+  z-index: 999999;
 }
 
 .bg_content {
