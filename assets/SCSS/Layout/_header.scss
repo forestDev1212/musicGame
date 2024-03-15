@@ -11,7 +11,7 @@ header {
         margin: auto;
         font-family: $font_noto;
         height: 10vh;
-        font-size: 40rem !important;
+        font-size: 20rem !important;
         color: #f57f11;
 
         .logo {
@@ -22,16 +22,33 @@ header {
             width: 100%;
             height: 100%;
             align-items: center;
+            ._col {
+                @include media('tb') {
+                    width: 100%;
+                }
+            }
         }
-
+        ul {
+            gap: 20rem;
+            display: flex;
+            justify-content: center;
+        }
         li {
             display: inline;
-            padding: 0px 30px;
+            // padding: 0px 30px;
             font-size: 19px;
-            gap : 25rem;
+            gap : 15rem;
 
             &:last-child {
                 padding-right: 0;
+            }
+            a {
+                &:hover {
+                    cursor: pointer;
+                text-shadow: 2px 5px 2px #161515;
+                }
+                font-weight: 800;
+                text-shadow: 1px 3px 2px #161515;
             }
         }
     }

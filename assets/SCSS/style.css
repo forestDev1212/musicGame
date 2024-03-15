@@ -5688,6 +5688,7 @@ body {
   height: 100%;
   max-width: 1600 !important;
   max-height: 1020 !important;
+  min-height: 750px;
   padding: 0;
   margin: 0;
   font-family: "fot-tsukuaoldmin-pr6n", sans-serif;
@@ -6096,7 +6097,7 @@ header .header {
   margin: auto;
   font-family: "Yu Mincho", sans-serif;
   height: 10vh;
-  font-size: 40rem !important;
+  font-size: 20rem !important;
   color: #f57f11;
 }
 header .header .logo {
@@ -6108,14 +6109,31 @@ header .header .wrap_rl {
   height: 100%;
   align-items: center;
 }
+@media print, screen and (max-width: 991px) {
+  header .header .wrap_rl ._col {
+    width: 100%;
+  }
+}
+header .header ul {
+  gap: 20rem;
+  display: flex;
+  justify-content: center;
+}
 header .header li {
   display: inline;
-  padding: 0px 30px;
   font-size: 19px;
-  gap: 25rem;
+  gap: 15rem;
 }
 header .header li:last-child {
   padding-right: 0;
+}
+header .header li a {
+  font-weight: 800;
+  text-shadow: 1px 3px 2px #161515;
+}
+header .header li a:hover {
+  cursor: pointer;
+  text-shadow: 2px 5px 2px #161515;
 }
 
 .loading {
@@ -6140,6 +6158,55 @@ header .header li:last-child {
 
 section {
   padding: 0px 10%;
+}
+
+.section_1 {
+  display: flex;
+  height: 18vh;
+}
+.section_1 div {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.section_1 div.blank {
+  width: 30%;
+}
+@media print, screen and (max-width: 991px) {
+  .section_1 div.blank {
+    width: 300px;
+  }
+}
+.section_1 div.text {
+  width: 70%;
+}
+@media print, screen and (max-width: 991px) {
+  .section_1 div.text {
+    width: calc(100vw - 300px);
+  }
+}
+.section_1 div p {
+  color: white;
+  font-weight: 400;
+  font-size: 50rem;
+}
+
+.section_2 .score_board {
+  width: 300px !important;
+  height: 15vh;
+  background-color: white;
+  border: 2px solid black;
+  padding: 5rem;
+  color: #f57f11;
+  font-weight: bold;
+}
+
+.music_buttons {
+  width: 350px;
+  height: 30vh;
+  border: 1px solid black;
+  position: absolute;
+  bottom: 0px;
 }
 
 .first_section {
