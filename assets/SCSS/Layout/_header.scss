@@ -7,11 +7,12 @@ header {
     // .header_menu {
 
     // }
+    background-color: #ffe5ca;
     .header {
         margin: auto;
         font-family: $font_noto;
-        height: 10vh;
-        font-size: 20rem !important;
+        height: 10%;
+        font-size: 10rem !important;
         color: #f57f11;
 
         .logo {
@@ -36,7 +37,7 @@ header {
         li {
             display: inline;
             // padding: 0px 30px;
-            font-size: 19px;
+            font-size: 15px;
             gap : 15rem;
 
             &:last-child {
@@ -45,10 +46,10 @@ header {
             a {
                 &:hover {
                     cursor: pointer;
-                text-shadow: 2px 5px 2px #161515;
+                text-shadow: 2px 2px 2px #161515;
                 }
                 font-weight: 800;
-                text-shadow: 1px 3px 2px #161515;
+                // text-shadow: 1px 3px 2px #161515;
             }
         }
     }

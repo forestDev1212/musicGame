@@ -5677,18 +5677,14 @@ html {
   overflow-x: hidden;
   font-size: 0.0625vw;
 }
-@media only screen and (max-width: 768px) {
-  html {
-    font-size: 0.133333vw;
-  }
-}
 
 body {
   width: 100%;
   height: 100%;
-  max-width: 1600 !important;
-  max-height: 1020 !important;
-  min-height: 750px;
+  max-width: 1920px !important;
+  max-height: 1080px !important;
+  min-height: 750px !important;
+  min-width: 800px;
   padding: 0;
   margin: 0;
   font-family: "fot-tsukuaoldmin-pr6n", sans-serif;
@@ -6093,11 +6089,14 @@ fieldset {
   zoom: 1;
 }
 
+header {
+  background-color: #ffe5ca;
+}
 header .header {
   margin: auto;
   font-family: "Yu Mincho", sans-serif;
-  height: 10vh;
-  font-size: 20rem !important;
+  height: 10%;
+  font-size: 10rem !important;
   color: #f57f11;
 }
 header .header .logo {
@@ -6121,7 +6120,7 @@ header .header ul {
 }
 header .header li {
   display: inline;
-  font-size: 19px;
+  font-size: 15px;
   gap: 15rem;
 }
 header .header li:last-child {
@@ -6129,11 +6128,10 @@ header .header li:last-child {
 }
 header .header li a {
   font-weight: 800;
-  text-shadow: 1px 3px 2px #161515;
 }
 header .header li a:hover {
   cursor: pointer;
-  text-shadow: 2px 5px 2px #161515;
+  text-shadow: 2px 2px 2px #161515;
 }
 
 .loading {
@@ -6147,13 +6145,21 @@ header .header li a:hover {
   background-image: url("/assets/images/background/orange-bg.jpg");
   z-index: 999999;
 }
+.loading .logo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 
+@font-face {
+  font-family: "MusiQwik";
+  src: url("/assets/fonts/musiqwik/MusiQwik.ttf") format("truetype");
+  /* Replace 'path/to/MusiQwik.ttf' with the actual path to your font file */
+}
 .bg_content {
   width: 100%;
   height: 100%;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-image: url("/assets/images/background/Jayde-Musica-Blank.jpg");
 }
 
 section {
@@ -6161,41 +6167,56 @@ section {
 }
 
 .section_1 {
-  display: flex;
-  height: 18vh;
-}
-.section_1 div {
+  border-top: 2px solid black;
+  border-bottom: 2px solid black;
+  height: 18%;
+  background-position: 0%;
+  background-image: url("/assets/images/background/orange-bg.jpg");
   display: flex;
   align-items: center;
-  justify-content: flex-start;
 }
-.section_1 div.blank {
+.section_1 .blank {
   width: 30%;
+  height: 100%;
 }
 @media print, screen and (max-width: 991px) {
-  .section_1 div.blank {
+  .section_1 .blank {
     width: 300px;
   }
 }
-.section_1 div.text {
+.section_1 .blank figure {
+  height: 100%;
+}
+.section_1 .blank figure img {
+  height: 100%;
+}
+.section_1 .text {
   width: 70%;
 }
 @media print, screen and (max-width: 991px) {
-  .section_1 div.text {
+  .section_1 .text {
     width: calc(100vw - 300px);
   }
 }
-.section_1 div p {
+.section_1 p {
   color: white;
   font-weight: 400;
   font-size: 50rem;
 }
 
+.section_2 {
+  background-color: #ffe5ca;
+  height: 55%;
+  border-bottom: 2px solid black;
+}
 .section_2 .score_board {
-  width: 300px !important;
-  height: 15vh;
+  width: 20% !important;
+  position: relative;
+  top: 20px;
   background-color: white;
-  border: 2px solid black;
+  border-top: 2px solid black;
+  border-right: 2px solid black;
+  border-bottom: 2px solid black;
   padding: 5rem;
   color: #f57f11;
   font-weight: bold;
@@ -6216,6 +6237,13 @@ section {
   position: absolute;
   bottom: 0px;
   right: 0px;
+}
+
+.music_symbol {
+  font-family: "Musiqwik";
+  font-size: 70rem;
+  white-space: nowrap;
+  font-weight: 400;
 }
 
 .first_section {

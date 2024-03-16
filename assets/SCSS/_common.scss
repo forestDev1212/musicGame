@@ -7,17 +7,18 @@ html {
     overflow-x: hidden;
     font-size: 0.0625vw;
 
-    @include media('sp') {
-        font-size: 0.133333vw;
-    }
+    // @include media('sp') {
+    //     font-size: 0.133333vw;
+    // }
 }
 
 body {
     width: 100%;
     height: 100%;
-    max-width: 1600 !important;
-    max-height: 1020 !important;
-    min-height: 750px;
+    max-width: 1920px !important;
+    max-height: 1080px !important;
+    min-height: 750px !important;
+    min-width: 800px;
     padding: 0;
     margin: 0;
     font-family: "fot-tsukuaoldmin-pr6n", sans-serif;
