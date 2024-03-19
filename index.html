@@ -6,6 +6,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./assets/SCSS/style.css">
   <title>Music Game</title>
+  <style>
+     .letter {
+    position: absolute;
+    /* font-size: 24px; */
+    /* height: 24px; Fixed height for each letter */
+    animation: moveRightToLeft 5s linear forwards;
+  }
+
+  /* Keyframes animation */
+  @keyframes moveRightToLeft {
+    from {
+      left: 100%;
+      top: var(--top-offset); /* Starting top position */
+    }
+    to {
+      top: var(--top-offset); /* Starting top position */
+      left: -10%; /* Adjust this value to make letters disappear off the screen */
+    }
+  }
+  </style>
 </head>
 
 <body>
@@ -17,11 +37,7 @@
     </div>
   </div> -->
   <div class="bg_content">
-    <!-- <div>
-      <div class="music_symbol">
-        '&====]]=====!!
-      </div>
-    </div> -->
+
     <header>
       <div class="header">
         <div class="wrap_rl ">
@@ -29,7 +45,7 @@
             <ul>
               <li><a href="#">HIGH SCORES</a></li>
               |
-              <li><a href="#">OPTIONS</a></li>
+              <li><a href="#" id="option_btn">OPTIONS</a></li>
               |
               <li><a href="#">TUTORIALS</a></li>
             </ul>
@@ -58,22 +74,33 @@
       </div>
     </div>
     <div class="section_2">
-      <div>
         <div class="score_board">
-          <ul>
-            <li>LEVEL : <span id="level"></span></li>
-            <li>LIVES REMAINING : <span id="lives_remaining"></span></li>
-            <li>SCORE : <span id="score"></span></li>
-          </ul>
+            <div>LEVEL : <span id="level"></span></div>
+            <div>LIVES REMAINING : <span id="lives_remaining"></span></div>
+            <div>SCORE : <span id="score"></span></div>
+            <!-- <button onclick="checkLetter('A')">A</button> -->
         </div>
-      </div>
+        <div id="symbol_container">
+          
+        </div>
     </div>
-    <!-- <div class="music_buttons">
+    <div class="section_3">
 
-    </div> -->
+    </div>
+    <div class="footer">
+
+    </div>
+
+    <div class="music_buttons">
+      <button onclick="checkLetter('A')">A</button>
+    </div>
   </div>
 
-
+  <div class="note">
+    <figure>
+      <img src="/assets/images/background/Note.png" alt="Note">
+    </figure>
+  </div>
 
   <!-- <div class="control_panel">
     <ul>
@@ -82,6 +109,27 @@
       <li>SCORE : <span id="score"></span></li>
     </ul>
   </div> -->
+
+  <div id="option_modal" class="modal">
+    
+    <!-- Modal content -->
+    <div class="modal-content">
+      <div class="modal-header">
+        <span>
+          OPTIONS
+        </span>
+        <span>
+          CLOSE WINDOW
+        </span>
+      </div>
+      <div class="modal-body">
+        <div class="body-rigth">
+          <p>Difficulty:</p>
+        </div>
+      </div>
+    </div>
+  
+  </div>
   <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
   <script src="https://code.jquery.com/jquery-migrate-3.0.0.min.js"></script>
   <script src="./assets/js/main.js"></script>

@@ -7,11 +7,14 @@ header {
     // .header_menu {
 
     // }
+    height: 10%;
+    position : relative;
     background-color: #ffe5ca;
+    z-index: 9;
     .header {
         margin: auto;
+        z-index: 10000;
         font-family: $font_noto;
-        height: 10%;
         font-size: 10rem !important;
         color: #f57f11;
 

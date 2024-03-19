@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moving Letters</title>
+<style>
+  /* Style for the letters */
+  .letter {
+    position: absolute;
+    font-size: 24px;
+    height: 24px; /* Fixed height for each letter */
+    animation: moveRightToLeft 5s linear forwards;
+  }
+
+  /* Keyframes animation */
+  @keyframes moveRightToLeft {
+    from {
+      left: 100%;
+      top: var(--top-offset); /* Starting top position */
+    }
+    to {
+      left: -10%; /* Adjust this value to make letters disappear off the screen */
+    }
+  }
+</style>
+</head>
+<body>
+<!-- Container for the letters -->
+<div id="lettersContainer"></div>
+
+<!-- Buttons for each letter -->
+<div id="buttonsContainer">
+  <button onclick="checkLetter('A')">A</button>
+  <button onclick="checkLetter('B')">B</button>
+  <button onclick="checkLetter('C')">C</button>
+  <button onclick="checkLetter('D')">D</button>
+  <button onclick="checkLetter('E')">E</button>
+  <button onclick="checkLetter('F')">F</button>
+  <button onclick="checkLetter('G')">G</button>
+</div>
+
+<script>
+  // Function to create and start moving a letter
+  function moveLetter(letter) {
+    const lettersContainer = document.getElementById('lettersContainer');
+    const newLetter = document.createElement('span');
+    newLetter.classList.add('letter');
+    newLetter.textContent = letter;
+    // Set a random value for --top-offset CSS variable (between 0 and 100%)
+    newLetter.style.setProperty('--top-offset', Math.random() * 100 + '%');
+    lettersContainer.appendChild(newLetter);
+    
+    // Remove the letter after the animation completes
+    newLetter.addEventListener('animationend', function() {
+      newLetter.remove();
+    });
+  }
+
+  // Function to check if the pressed button matches the moving letter
+  function checkLetter(letter) {
+    const letters = document.querySelectorAll('.letter');
+    for (let i = 0; i < letters.length; i++) {
+      const el = letters[i];
+      if (el.textContent === letter) {
+        el.remove();
+        break; // Exit the loop after removing the first matching letter
+      }
+    }
+  }
+
+  // Generate random letters A to G and start moving them
+  const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
+  setInterval(function() {
+    const randomIndex = Math.floor(Math.random() * letters.length);
+    moveLetter(letters[randomIndex]);
+  }, 2000); // Change this value to adjust the frequency of letter movement
+</script>
+</body>
+</html>
