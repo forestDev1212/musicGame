@@ -65,7 +65,6 @@ console.log(randomNum);
   const numStr = String(randomNum);
   
   // Iterate over each character in the string
-  $(document).on('cl')
   for (let i = 0; i < numStr.length; i++) {
     if(i === 0) {
       if( parseInt(numStr[i]) % 3 == 1) {
@@ -105,7 +104,70 @@ console.log(randomNum);
 
 })
 
+
+function generateMusicNote () {
+  const randomNum = generateRandomNumber([1, 2, 3]);
+  var musicArry = []
+console.log(randomNum);
+  var randomLetter = "'" 
+  const numStr = String(randomNum);
+  
+  // Iterate over each character in the string
+  $(document).on('cl')
+  for (let i = 0; i < numStr.length; i++) {
+    if(i === 0) {
+      if( parseInt(numStr[i]) % 3 == 1) {
+        randomLetter += '&=='
+      } else if(parseInt(numStr[i]) % 3 == 2) {
+        randomLetter += '¯=='
+      } else {
+        randomLetter += 'ÿ=='
+      }
+    } else if(i !== numStr.length - 1) {
+      if(parseInt(numStr[0]) % 3 == 1) {
+        randomLetter += treble[parseInt(numStr[i]) - 1] + "="
+      } else if(parseInt(numStr[0]) % 3 == 2) {
+        randomLetter += bass[parseInt(numStr[i]) - 1] + "="
+      } else {
+        randomLetter += alto[parseInt(numStr[i]) - 1] + "="
+      }
+    } else {
+      if(parseInt(numStr[0]) % 3 == 1) {
+        randomLetter += treble[parseInt(numStr[i]) - 1] + "=."
+      } else if(parseInt(numStr[0]) % 3 == 2) {
+        randomLetter += bass[parseInt(numStr[i]) - 1] + "=."
+      } else {
+        randomLetter += alto[parseInt(numStr[i]) - 1] + "=."
+      }
+    }
+  }
+  console.log(true)
+  console.log(randomLetter)
+  // document.getElementById('music_symbol').innerText = randomLetter
+  moveLetter(randomLetter)
+  musicArry.push({
+    value : randomNum,
+    string : randomLetter
+  })
+  console.log(musicArry)
+}
 $(document).on('click', '#start_btn', function() {
+  let index = 0;
+function outputMusicNote() {
+  // Check if all words have been displayed
+  if (index < 20) {
+    // Output the word
+    console.log(true);
+    generateMusicNote()
+    // Increment the index for the next word
+    index++;
+} else {
+    console.log(false)
+    // Stop the interval when all words have been displayed
+    clearInterval(interval);
+}
+}
+  const interval = setInterval(outputMusicNote, 2000)
   console.log(true)
 })
 
