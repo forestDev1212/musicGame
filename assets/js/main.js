@@ -10,6 +10,10 @@ const treble = ["R", "S", "T", "U", "V", "W", "X"]; //letters for treble tone
 const bass = ["W", "X", "Y", "Z", "[", "\\", "]"]; //letters for bass tone
 const alto = ["X", "Y", "Z", "[", "\\", "]", "^"]; //letters for alto tone
 let interval;
+let noteIndex = 0;
+const LEVEL_1_NUMBER = 3;
+const LEVEL_2_NUMBER = 10;
+const LEVEL_3_NUMBER = 20;
 
 //Each Tones
 const C = [11, 21, 31];
@@ -62,7 +66,7 @@ function moveLetter(letterObject) {
   newNote.classList.add("letter");
   newNote.textContent = letterObject.string;
 
-  const offset = Math.random() > 0.5 ? 40 : 60;
+  const offset = Math.random() > 0.4 ? 40 : 60;
   newNote.style.setProperty("--top-offset", offset + "%");
   lettersContainer.appendChild(newNote);
 
@@ -97,6 +101,13 @@ function generateRandomNumber(clefArray, level = 1) {
   return randomNumber;
 }
 
+function resetMusicNoteArry() {
+  $("#symbol_container > span").each(function (index) {
+    // Change the content of the span tag
+    $(this).text(musicArry[index].string);
+  });
+}
+
 /**
  * function for check letter if press music note button 
  * @param {*} letter 
@@ -117,10 +128,7 @@ function checkLetter(letter) {
           if (el.textContent === item.string) {
             el.remove();
             cacheLetter = 0;
-            $("#symbol_container > span").each(function (index) {
-              // Change the content of the span tag
-              $(this).text(musicArry[index].string);
-            });
+            resetMusicNoteArry()
             break; // Exit the loop after removing the first matching letter
           }
         }
@@ -129,6 +137,8 @@ function checkLetter(letter) {
       } else {
         const remainder = sevenTone[letter][0] % 10;
         const totalNote = cacheLetter * 10 + remainder;
+        const totalNoteLegth = totalNote.toString().length
+        const itemValueLength = item.value.toString().length
         if (totalNote === item.value) {
           musicArry.splice(musicArry.indexOf(item), 1);
           matched = true;
@@ -137,15 +147,16 @@ function checkLetter(letter) {
             if (el.textContent === item.string) {
               el.remove();
               cacheLetter = 0;
+              resetMusicNoteArry()
               break; // Exit the loop after removing the first matching letter
             }
           }
           addScore();
           return;
         } else if (
-          totalNote.toString().length < item.value.toString().length &&
-          totalNote.toString() ===
-            item.value.toString().substring(0, totalNote.toString().length)
+          totalNoteLegth < itemValueLength &&
+          totalNote.toString().substring(1, totalNoteLegth - 1 ) ===
+            item.value.toString().substring(1, totalNoteLegth - 1)
         ) {
           cacheLetter = totalNote;
           included = true;
@@ -260,10 +271,7 @@ function checkLetter(letter) {
             live--;
             $("#lives_remaining").text(live);
             cacheLetter = 0;
-            $("#symbol_container > span").each(function (index) {
-              // Change the content of the span tag
-              $(this).text(musicArry[index].string);
-            });
+            resetMusicNoteArry()
             if (live === 0) {
               $("#lives_remaining").text(live);
               alert("Game Over");
@@ -291,8 +299,7 @@ function checkLetter(letter) {
       } else if (
         sevenTone[letter].indexOf(
           parseInt(item.value.toString().substring(0, 2))
-        ) !== -1 &&
-        included === false
+        ) !== -1
       ) {
         cacheLetter = parseInt(item.value.toString().substring(0, 2));
         included = true;
@@ -406,6 +413,12 @@ function checkLetter(letter) {
       alert("Game Over");
     }
   }
+
+  console.log(noteIndex)
+  console.log(musicArry)
+  if(noteIndex === 3 && musicArry.length === 0) {
+    alert("the level 1 completed.")
+  }
 }
 
 function gamerOver() {}
@@ -481,23 +494,35 @@ $(document).on(
   "click",
   "#start_btn",
   function (mode = 3000, tones = [1, 2, 3]) {
-    let index = 0;
+    // let noteIndex = 0;
     function outputMusicNote() {
       // Check if all words have been displayed
-      if (index < 3 && live > 0) {
+      if (noteIndex < LEVEL_1_NUMBER && live > 0) {
         // Output the word
         generateMusicNote(tones, 1);
         $("#level").text(1);
-        // Increment the index for the next word
-        index++;
-      } else if (10 > index && index >= 3 && live > 0) {
-        generateMusicNote(tones, 2);
-        $("#level").text(2);
-        index++;
-      } else if (index >= 10 && live > 0) {
+        // Increment the noteIndex for the next word
+        noteIndex++;
+      } else if (LEVEL_2_NUMBER > noteIndex && noteIndex >= LEVEL_1_NUMBER && live > 0) {
+        // if(noteIndex === 3 ) {
+        //   clearInterval(interval)
+        //   alert("Click here to continue")
+        //   interval = setInterval(outputMusicNote, 3000)
+        // }
+        if(noteIndex === LEVEL_1_NUMBER ) {
+          clearInterval(interval)
+          if(musicArry.length === 0) {
+            alert("Level 1 complete.")
+            generateMusicNote(tones, 2);
+          $("#level").text(2);
+          noteIndex++;
+          }
+        }
+        
+      } else if (noteIndex >= LEVEL_2_NUMBER && live > 0) {
         $("#level").text(3);
         generateMusicNote(tones, 3);
-        index++;
+        noteIndex++;
       } else {
         // Stop the interval when all words have been displayed
         clearInterval(interval);
@@ -507,10 +532,14 @@ $(document).on(
         }
       }
     }
-    const interval = setInterval(outputMusicNote, 3000);
+    interval = setInterval(outputMusicNote, 3000);
   }
 );
 
+console.log(noteIndex)
+if(noteIndex === 3 && musicArry.length === 0) {
+  alert("the level 1 complete")
+}
 $(document).on("click", ".music_button", function () {});
 
 // Get the modal
