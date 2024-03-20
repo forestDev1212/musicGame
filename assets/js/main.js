@@ -270,7 +270,7 @@ function checkLetter(letter) {
       } else if (
         sevenTone[letter].indexOf(
           parseInt(item.value.toString().substring(0, 2))
-        ) !== -1
+        ) !== -1 && included === false
       ) {
         cacheLetter = parseInt(item.value.toString().substring(0, 2));
         console.log(cacheLetter);
@@ -456,6 +456,7 @@ $(document).on("click", "#start_btn", function (mode = 3000, tones = [1, 2, 3]) 
   let index = 0;
   function outputMusicNote() {
     console.log(index)
+    $("#level").text(level)
     // Check if all words have been displayed
     if (index < 3 && live > 0) {
       // Output the word
