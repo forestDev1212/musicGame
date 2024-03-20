@@ -52,9 +52,9 @@ function moveLetter(letterObject) {
 function generateRandomNumber(clefArray, level = 1) {
   // Generate random length between 2 and maxLength
   const maxLength = clefArray.length + 1;
-  console.log(level)
-  const length = Math.floor(Math.random() * (level)) + 2;
-  console.log(length)
+  console.log(level);
+  const length = Math.floor(Math.random() * level) + 2;
+  console.log(length);
   // Generate first number between 1 and 3
   let randomNumber = clefArray[Math.floor(Math.random() * clefArray.length)];
 
@@ -270,7 +270,8 @@ function checkLetter(letter) {
       } else if (
         sevenTone[letter].indexOf(
           parseInt(item.value.toString().substring(0, 2))
-        ) !== -1 && included === false
+        ) !== -1 &&
+        included === false
       ) {
         cacheLetter = parseInt(item.value.toString().substring(0, 2));
         console.log(cacheLetter);
@@ -395,11 +396,9 @@ function checkLetter(letter) {
     }
   }
 }
-function gamerOver() {
-
-}
+function gamerOver() {}
 function generateMusicNote(tones = [1, 2, 3], level = 1) {
-  console.log(tones, level)
+  console.log(tones, level);
   const randomNum = generateRandomNumber(tones, level);
   // const randomNum = generateRandomNumber([1, 2, 3]);
   var randomLetter = "'";
@@ -452,39 +451,43 @@ $(document).ready(function () {
   // })
 });
 
-$(document).on("click", "#start_btn", function (mode = 3000, tones = [1, 2, 3]) {
-  let index = 0;
-  function outputMusicNote() {
-    console.log(index)
-    $("#level").text(level)
-    // Check if all words have been displayed
-    if (index < 3 && live > 0) {
-      // Output the word
-      generateMusicNote(tones, 1);
-      console.log(musicArry);
-      // Increment the index for the next word
-      index++;
-    } else if (10 > index && index >= 3 && live > 0) {
-      generateMusicNote(tones, 2);
-      index++;
-
-    } else if(index >= 10 && live > 0) {
-      generateMusicNote(tones, 3)
-      index++
-    }
-    else {
-      console.log(live);
-      // Stop the interval when all words have been displayed
-      clearInterval(interval);
-      $("#lives_remaining").text(live);
-      if (live === 0) {
-        alert("Game OVER");
+$(document).on(
+  "click",
+  "#start_btn",
+  function (mode = 3000, tones = [1, 2, 3]) {
+    let index = 0;
+    function outputMusicNote() {
+      console.log(index);
+      // Check if all words have been displayed
+      if (index < 3 && live > 0) {
+        // Output the word
+        generateMusicNote(tones, 1);
+        $("#level").text(1);
+        console.log(musicArry);
+        // Increment the index for the next word
+        index++;
+      } else if (10 > index && index >= 3 && live > 0) {
+        generateMusicNote(tones, 2);
+        $("#level").text(2);
+        index++;
+      } else if (index >= 10 && live > 0) {
+        $("#level").text(3);
+        generateMusicNote(tones, 3);
+        index++;
+      } else {
+        console.log(live);
+        // Stop the interval when all words have been displayed
+        clearInterval(interval);
+        $("#lives_remaining").text(live);
+        if (live === 0) {
+          alert("Game OVER");
+        }
       }
     }
+    const interval = setInterval(outputMusicNote, 3000);
+    console.log(true);
   }
-  const interval = setInterval(outputMusicNote, 3000);
-  console.log(true);
-});
+);
 
 $(document).on("click", ".music_button", function () {});
 
