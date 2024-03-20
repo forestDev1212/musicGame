@@ -30,6 +30,11 @@ const sevenTone = {
   A: [16, 26, 36],
   B: [17, 27, 37],
 };
+
+function addScore() {
+  score += 15;
+  $("#score").text(score);
+}
 function moveLetter(letterObject) {
   const lettersContainer = document.getElementById("symbol_container");
   const newNote = document.createElement("span");
@@ -96,6 +101,7 @@ function checkLetter(letter) {
             break; // Exit the loop after removing the first matching letter
           }
         }
+        addScore()
         return;
       } else {
         const remainder = sevenTone[letter][0] % 10;
@@ -116,6 +122,7 @@ function checkLetter(letter) {
               break; // Exit the loop after removing the first matching letter
             }
           }
+          addScore()
           return;
         } else if (
           totalNote.toString().length < item.value.toString().length &&
@@ -267,6 +274,7 @@ function checkLetter(letter) {
             return; // Exit the loop after removing the first matching letter
           }
         }
+        addScore()
         return;
       } else if (
         sevenTone[letter].indexOf(
