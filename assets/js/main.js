@@ -12,7 +12,7 @@ const alto = ["X", "Y", "Z", "[", "\\", "]", "^"]; //letters for alto tone
 let interval;
 let noteIndex = 0;
 let mode = 3;
-let tones = [1, 2, 3]
+let tones = [1, 2, 3];
 const LEVEL_1_NUMBER = 3;
 const LEVEL_2_NUMBER = 10;
 const LEVEL_3_NUMBER = 20;
@@ -37,8 +37,8 @@ const sevenTone = {
   B: [17, 27, 37],
 };
 
-
 var modal = document.getElementById("option_modal");
+var score_modal = document.getElementById("score_modal");
 
 //Function for preload Image
 
@@ -106,7 +106,7 @@ function generateRandomNumber(clefArray, level = 1) {
 function resetMusicNoteArry() {
   $("#symbol_container > span").each(function (index) {
     // Change the content of the span tag
-    console.log(index)
+    console.log(index);
     $(this).text(musicArry[index].string);
   });
 }
@@ -140,11 +140,14 @@ function checkLetter(letter) {
       } else {
         const remainder = sevenTone[letter][0] % 10;
         const totalNote = cacheLetter * 10 + remainder;
-        const totalNoteString = totalNote.toString()
+        const totalNoteString = totalNote.toString();
         const totalNoteLegth = totalNote.toString().length;
         const itemValueLength = item.value.toString().length;
-        const itemValueString = item.value.toString()
-        if (totalNoteString.substring(1, totalNoteLegth) === itemValueString.substring(1, itemValueLength)) {
+        const itemValueString = item.value.toString();
+        if (
+          totalNoteString.substring(1, totalNoteLegth) ===
+          itemValueString.substring(1, itemValueLength)
+        ) {
           musicArry.splice(musicArry.indexOf(item), 1);
           matched = true;
           for (let i = 0; i < letters.length; i++) {
@@ -279,7 +282,7 @@ function checkLetter(letter) {
             resetMusicNoteArry();
             if (live === 0) {
               $("#lives_remaining").text(live);
-              alert("Game Over");
+              score_modal.style.display = "block";
             }
           }
         }
@@ -298,7 +301,7 @@ function checkLetter(letter) {
             el.remove();
             addScore();
             cacheLetter = 0;
-            resetMusicNoteArry()
+            resetMusicNoteArry();
             return; // Exit the loop after removing the first matching letter
           }
         }
@@ -409,6 +412,7 @@ function checkLetter(letter) {
           if (live === 0) {
             $("#lives_remaining").text(live);
             clearInterval(interval);
+            score_modal.style.display = "block";
           }
           return;
         }
@@ -417,7 +421,7 @@ function checkLetter(letter) {
     if (live === 0) {
       $("#lives_remaining").text(live);
       clearInterval(interval);
-      alert("Game Over");
+      modal.style.display = "block";
     }
   }
 
@@ -431,8 +435,6 @@ function checkLetter(letter) {
     modal.style.display = "block";
   }
 }
-
-function gamerOver() {}
 
 /**
  * function for generateMusicNotes
@@ -484,6 +486,16 @@ function generateMusicNote(tones = [1, 2, 3], level = 1) {
   });
 }
 
+function saveScore() {
+  const userName = $("#username").val();
+  const scoreList = {
+    userName: userName,
+    score: score,
+  };
+  window.localStorage.setItem("score", scoreList);
+}
+
+function gameOver() {}
 
 /**
  * when document is ready
@@ -497,48 +509,52 @@ $(document).ready(function () {
  *
  */
 
-$(document).on("click", "#start_btn", function (mode = 3000, tones = [1, 2, 3]) {
-  console.log(true);
-  // let noteIndex = 0;
-  function outputMusicNote() {
-    // Check if all words have been displayed
-    if (noteIndex < LEVEL_1_NUMBER && live > 0) {
-      // Output the word
-      generateMusicNote(tones, 1);
-      $("#level").text(1);
-      // Increment the noteIndex for the next word
-      noteIndex++;
-    } else if (
-      LEVEL_2_NUMBER > noteIndex &&
-      noteIndex >= LEVEL_1_NUMBER &&
-      live > 0
-    ) {
-      if (noteIndex === LEVEL_1_NUMBER) {
+$(document).on(
+  "click",
+  "#start_btn",
+  function (mode = 3000, tones = [1, 2, 3]) {
+    console.log(true);
+    // let noteIndex = 0;
+    function outputMusicNote() {
+      // Check if all words have been displayed
+      if (noteIndex < LEVEL_1_NUMBER && live > 0) {
+        // Output the word
+        generateMusicNote(tones, 1);
+        $("#level").text(1);
+        // Increment the noteIndex for the next word
+        noteIndex++;
+      } else if (
+        LEVEL_2_NUMBER > noteIndex &&
+        noteIndex >= LEVEL_1_NUMBER &&
+        live > 0
+      ) {
+        if (noteIndex === LEVEL_1_NUMBER) {
+          clearInterval(interval);
+          if (musicArry.length === 0) {
+            alert("Level 1 complete.");
+            generateMusicNote(tones, 2);
+            $("#level").text(2);
+            noteIndex++;
+          }
+        }
+      } else if (noteIndex >= LEVEL_2_NUMBER && live > 0) {
+        $("#level").text(3);
+        generateMusicNote(tones, 3);
+        noteIndex++;
+      } else {
+        // Stop the interval when all words have been displayed
         clearInterval(interval);
-        if (musicArry.length === 0) {
-          alert("Level 1 complete.");
-          generateMusicNote(tones, 2);
-          $("#level").text(2);
-          noteIndex++;
+        $("#lives_remaining").text(live);
+        if (live === 0) {
+          score_modal.style.display = "block";
         }
       }
-    } else if (noteIndex >= LEVEL_2_NUMBER && live > 0) {
-      $("#level").text(3);
-      generateMusicNote(tones, 3);
-      noteIndex++;
-    } else {
-      // Stop the interval when all words have been displayed
-      clearInterval(interval);
-      $("#lives_remaining").text(live);
-      if (live === 0) {
-        alert("Game OVER");
-      }
     }
+    interval = setInterval(outputMusicNote, 3000);
   }
-  interval = setInterval(outputMusicNote, 3000);
-});
+);
 
-$(document).on('click', '#continue_btn', function (mode, tones) {
+$(document).on("click", "#continue_btn", function (mode, tones) {
   modal.style.display = "none";
   console.log(true);
   // let noteIndex = 0;
@@ -559,29 +575,28 @@ $(document).on('click', '#continue_btn', function (mode, tones) {
         clearInterval(interval);
       } else {
         generateMusicNote(tones, 2);
-          $("#level").text(2);
-          noteIndex++;
+        $("#level").text(2);
+        noteIndex++;
       }
     } else if (noteIndex >= LEVEL_2_NUMBER && live > 0) {
       if (noteIndex === LEVEL_2_NUMBER) {
         clearInterval(interval);
       } else {
         generateMusicNote(tones, 3);
-          $("#level").text(3);
-          noteIndex++;
+        $("#level").text(3);
+        noteIndex++;
       }
     } else {
       // Stop the interval when all words have been displayed
       clearInterval(interval);
       $("#lives_remaining").text(live);
       if (live === 0) {
-        alert("Game OVER");
+        score_modal.style.display = "block";
       }
     }
   }
   interval = setInterval(outputMusicNote, 3000);
-})
-
+});
 
 // Get the button that opens the modal
 var btn = document.getElementById("option_btn");
@@ -598,5 +613,7 @@ btn.onclick = function () {
 window.onclick = function (event) {
   if (event.target == modal) {
     modal.style.display = "none";
+  } else if (event.target == score_modal) {
+    score_modal.style.display = "none";
   }
 };
