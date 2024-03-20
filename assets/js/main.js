@@ -1,8 +1,8 @@
 /**
  * Declare Constants
- * 
+ *
  */
-var musicArry = [];  //currently showing music notes
+var musicArry = []; //currently showing music notes
 var live = 3; //live
 var score = 0; //total score
 var cacheLetter = 0; //selected letter's cache value
@@ -43,7 +43,6 @@ $(window).on("load", function () {
   }, 3000);
 });
 
-
 /**
  * function for add score and display it on score board
  */
@@ -55,9 +54,8 @@ function addScore() {
 /**
  * moveLetter function
  * here param is for showing letter
- * @param {*} letterObject 
+ * @param {*} letterObject
  */
-
 
 function moveLetter(letterObject) {
   const lettersContainer = document.getElementById("symbol_container");
@@ -82,7 +80,7 @@ function moveLetter(letterObject) {
  * to generate Random numbers
  * @param {*} clefArray for tone Clef Array
  * @param {*} level for level
- * @returns 
+ * @returns
  */
 
 function generateRandomNumber(clefArray, level = 1) {
@@ -108,8 +106,8 @@ function resetMusicNoteArry() {
 }
 
 /**
- * function for check letter if press music note button 
- * @param {*} letter 
+ * function for check letter if press music note button
+ * @param {*} letter
  */
 
 function checkLetter(letter) {
@@ -127,7 +125,7 @@ function checkLetter(letter) {
           if (el.textContent === item.string) {
             el.remove();
             cacheLetter = 0;
-            resetMusicNoteArry()
+            resetMusicNoteArry();
             break; // Exit the loop after removing the first matching letter
           }
         }
@@ -136,8 +134,8 @@ function checkLetter(letter) {
       } else {
         const remainder = sevenTone[letter][0] % 10;
         const totalNote = cacheLetter * 10 + remainder;
-        const totalNoteLegth = totalNote.toString().length
-        const itemValueLength = item.value.toString().length
+        const totalNoteLegth = totalNote.toString().length;
+        const itemValueLength = item.value.toString().length;
         if (totalNote === item.value) {
           musicArry.splice(musicArry.indexOf(item), 1);
           matched = true;
@@ -146,7 +144,7 @@ function checkLetter(letter) {
             if (el.textContent === item.string) {
               el.remove();
               cacheLetter = 0;
-              resetMusicNoteArry()
+              resetMusicNoteArry();
               break; // Exit the loop after removing the first matching letter
             }
           }
@@ -154,7 +152,7 @@ function checkLetter(letter) {
           return;
         } else if (
           totalNoteLegth < itemValueLength &&
-          totalNote.toString().substring(1, totalNoteLegth - 1 ) ===
+          totalNote.toString().substring(1, totalNoteLegth - 1) ===
             item.value.toString().substring(1, totalNoteLegth - 1)
         ) {
           cacheLetter = totalNote;
@@ -270,7 +268,7 @@ function checkLetter(letter) {
             live--;
             $("#lives_remaining").text(live);
             cacheLetter = 0;
-            resetMusicNoteArry()
+            resetMusicNoteArry();
             if (live === 0) {
               $("#lives_remaining").text(live);
               alert("Game Over");
@@ -413,10 +411,14 @@ function checkLetter(letter) {
     }
   }
 
-  console.log(noteIndex)
-  console.log(musicArry)
-  if(noteIndex === 3 && musicArry.length === 0) {
-    alert("the level 1 completed.")
+  console.log(noteIndex);
+  console.log(musicArry);
+  if (noteIndex === LEVEL_1_NUMBER && musicArry.length === 0) {
+    alert("the level 1 completed.");
+    noteIndex++;
+  } else if (noteIndex === LEVEL_2_NUMBER && musicArry.length === 0) {
+    alert("the level 2 completed.");
+    noteIndex++;
   }
 }
 
@@ -424,8 +426,8 @@ function gamerOver() {}
 
 /**
  * function for generateMusicNotes
- * @param {*} tones 
- * @param {*} level 
+ * @param {*} tones
+ * @param {*} level
  */
 
 function generateMusicNote(tones = [1, 2, 3], level = 1) {
@@ -473,66 +475,72 @@ function generateMusicNote(tones = [1, 2, 3], level = 1) {
 }
 
 /**
+ *
+ * @param {*} mode
+ * @param {*} tones
+ */
+function continueGame(mode = 3000, tones = [1, 2, 3]) {
+  console.log(true);
+  // let noteIndex = 0;
+  function outputMusicNote() {
+    // Check if all words have been displayed
+    if (noteIndex < LEVEL_1_NUMBER && live > 0) {
+      // Output the word
+      generateMusicNote(tones, 1);
+      $("#level").text(1);
+      // Increment the noteIndex for the next word
+      noteIndex++;
+    } else if (
+      LEVEL_2_NUMBER > noteIndex &&
+      noteIndex >= LEVEL_1_NUMBER &&
+      live > 0
+    ) {
+      // if(noteIndex === 3 ) {
+      //   clearInterval(interval)
+      //   alert("Click here to continue")
+      //   interval = setInterval(outputMusicNote, 3000)
+      // }
+      if (noteIndex === LEVEL_1_NUMBER) {
+        clearInterval(interval);
+        if (musicArry.length === 0) {
+          alert("Level 1 complete.");
+          generateMusicNote(tones, 2);
+          $("#level").text(2);
+          noteIndex++;
+        }
+      }
+    } else if (noteIndex >= LEVEL_2_NUMBER && live > 0) {
+      $("#level").text(3);
+      generateMusicNote(tones, 3);
+      noteIndex++;
+    } else {
+      // Stop the interval when all words have been displayed
+      clearInterval(interval);
+      $("#lives_remaining").text(live);
+      if (live === 0) {
+        alert("Game OVER");
+      }
+    }
+  }
+  interval = setInterval(outputMusicNote, 3000);
+}
+
+/**
  * when document is ready
  */
 
 $(document).ready(function () {
   $("#lives_remaining").text(live);
-
 });
 
 /**
- * 
+ *
  */
 
-$(document).on(
-  "click",
-  "#start_btn",
-  function (mode = 3000, tones = [1, 2, 3]) {
-    // let noteIndex = 0;
-    function outputMusicNote() {
-      // Check if all words have been displayed
-      if (noteIndex < LEVEL_1_NUMBER && live > 0) {
-        // Output the word
-        generateMusicNote(tones, 1);
-        $("#level").text(1);
-        // Increment the noteIndex for the next word
-        noteIndex++;
-      } else if (LEVEL_2_NUMBER > noteIndex && noteIndex >= LEVEL_1_NUMBER && live > 0) {
-        // if(noteIndex === 3 ) {
-        //   clearInterval(interval)
-        //   alert("Click here to continue")
-        //   interval = setInterval(outputMusicNote, 3000)
-        // }
-        if(noteIndex === LEVEL_1_NUMBER ) {
-          clearInterval(interval)
-          if(musicArry.length === 0) {
-            alert("Level 1 complete.")
-            generateMusicNote(tones, 2);
-          $("#level").text(2);
-          noteIndex++;
-          }
-        }
-        
-      } else if (noteIndex >= LEVEL_2_NUMBER && live > 0) {
-        $("#level").text(3);
-        generateMusicNote(tones, 3);
-        noteIndex++;
-      } else {
-        // Stop the interval when all words have been displayed
-        clearInterval(interval);
-        $("#lives_remaining").text(live);
-        if (live === 0) {
-          alert("Game OVER");
-        }
-      }
-    }
-    interval = setInterval(outputMusicNote, 3000);
-  }
-);
+$(document).on("click", "#start_btn", continueGame());
 
-if(noteIndex === 3 && musicArry.length === 0) {
-  alert("the level 1 complete")
+if (noteIndex === 3 && musicArry.length === 0) {
+  alert("the level 1 complete");
 }
 
 // Get the modal
