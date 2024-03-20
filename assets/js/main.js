@@ -140,9 +140,11 @@ function checkLetter(letter) {
       } else {
         const remainder = sevenTone[letter][0] % 10;
         const totalNote = cacheLetter * 10 + remainder;
+        const totalNoteString = totalNote.toString()
         const totalNoteLegth = totalNote.toString().length;
         const itemValueLength = item.value.toString().length;
-        if (totalNote === item.value) {
+        const itemValueString = item.value.toString()
+        if (totalNoteString.substring(1, totalNoteLegth) === itemValueString.substring(1, itemValueLength)) {
           musicArry.splice(musicArry.indexOf(item), 1);
           matched = true;
           for (let i = 0; i < letters.length; i++) {
@@ -422,12 +424,11 @@ function checkLetter(letter) {
   console.log(noteIndex);
   console.log(musicArry);
   if (noteIndex === LEVEL_1_NUMBER && musicArry.length === 0) {
-    alert("the level 1 completed.");
     noteIndex++;
     modal.style.display = "block";
   } else if (noteIndex === LEVEL_2_NUMBER && musicArry.length === 0) {
-    alert("the level 2 completed.");
     noteIndex++;
+    modal.style.display = "block";
   }
 }
 
@@ -565,8 +566,8 @@ $(document).on('click', '#continue_btn', function (mode, tones) {
       if (noteIndex === LEVEL_2_NUMBER) {
         clearInterval(interval);
       } else {
-        generateMusicNote(tones, 2);
-          $("#level").text(2);
+        generateMusicNote(tones, 3);
+          $("#level").text(3);
           noteIndex++;
       }
     } else {
