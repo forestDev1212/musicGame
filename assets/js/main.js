@@ -531,11 +531,9 @@ $(document).on(
   }
 );
 
-console.log(noteIndex)
 if(noteIndex === 3 && musicArry.length === 0) {
   alert("the level 1 complete")
 }
-$(document).on("click", ".music_button", function () {});
 
 // Get the modal
 var modal = document.getElementById("option_modal");
