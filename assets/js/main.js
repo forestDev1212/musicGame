@@ -1,9 +1,9 @@
 var musicArry = [];
 var live = 3;
-var cacheLetter = 0
+var cacheLetter = 0;
 const treble = ["R", "S", "T", "U", "V", "W", "X"];
 const bass = ["W", "X", "Y", "Z", "[", "\\", "]"];
-const alto = ["X", "Y", "Z", "[", "\\", ']', '^'];
+const alto = ["X", "Y", "Z", "[", "\\", "]", "^"];
 let interval;
 
 $(window).on("load", function () {
@@ -11,13 +11,13 @@ $(window).on("load", function () {
     $(".loading").fadeOut(3000);
   }, 3000);
 });
-const C = [11, 21, 31]
-const D = [12, 22, 32]
-const E = [13, 23, 33]
-const F = [14, 24, 34]
-const G = [15, 25, 35]
-const A = [16, 26, 36]
-const B = [17, 27, 37]
+const C = [11, 21, 31];
+const D = [12, 22, 32];
+const E = [13, 23, 33];
+const F = [14, 24, 34];
+const G = [15, 25, 35];
+const A = [16, 26, 36];
+const B = [17, 27, 37];
 
 const sevenTone = {
   C: [11, 21, 31],
@@ -26,8 +26,8 @@ const sevenTone = {
   F: [14, 24, 34],
   G: [15, 25, 35],
   A: [16, 26, 36],
-  B: [17, 27, 37]
-}
+  B: [17, 27, 37],
+};
 function moveLetter(letterObject) {
   const lettersContainer = document.getElementById("symbol_container");
   const newNote = document.createElement("span");
@@ -40,7 +40,7 @@ function moveLetter(letterObject) {
 
   // Remove the letter after the animation completes
   newNote.addEventListener("animationend", function () {
-    musicArry.splice(musicArry.indexOf(letterObject), 1)
+    musicArry.splice(musicArry.indexOf(letterObject), 1);
     newNote.remove();
     live--;
   });
@@ -64,98 +64,147 @@ function generateRandomNumber(clefArray) {
 }
 
 function checkLetter(letter) {
-  console.log(letter)
+  console.log(letter);
   const letters = document.querySelectorAll(".letter");
-  if(cacheLetter !== 0) {
-    const remainder = sevenTone[letter] % 10
+  if (cacheLetter !== 0) {
+    console.log(cacheLetter);
+    const remainder = sevenTone[letter][0] % 10;
     musicArry.forEach((item, index) => {
-      if(sevenTone[letter].indexOf(item.value) !== -1)    {
-        console.log("you are right.")
-        musicArry.splice(musicArry.indexOf(item), 1)
+      if (sevenTone[letter].indexOf(item.value) !== -1) {
+        console.log("you are right.");
+        musicArry.splice(musicArry.indexOf(item), 1);
         for (let i = 0; i < letters.length; i++) {
           const el = letters[i];
           if (el.textContent === item.string) {
             el.remove();
-            cacheLetter = 0
+            cacheLetter = 0;
             break; // Exit the loop after removing the first matching letter
           }
         }
         return;
       } else {
-        const totalNote = cacheLetter * 10 + remainder
-        if(totalNote === item.value) {
-          console.log("you are right.")
-          musicArry.splice(musicArry.indexOf(item), 1)
+        const remainder = sevenTone[letter][0] % 10;
+        const totalNote = cacheLetter * 10 + remainder;
+        console.log(totalNote);
+        console.log(item.value);
+        if (totalNote === item.value) {
+          console.log("you are right.");
+          musicArry.splice(musicArry.indexOf(item), 1);
           for (let i = 0; i < letters.length; i++) {
             const el = letters[i];
+            console.log(el.textContent)
+            console.log(item.string)
             if (el.textContent === item.string) {
               el.remove();
-              cacheLetter = 0
+              cacheLetter = 0;
               break; // Exit the loop after removing the first matching letter
             }
           }
           return;
-        } else if(totalNote.toString().length < item.value && totalNote.toString() === item.value.toString().substring(0, totalNote.toString().length)) {
-          cacheLetter = totalNote
+        } else if (
+          totalNote.toString().length < item.value &&
+          totalNote.toString() ===
+            item.value.toString().substring(0, totalNote.toString().length)
+        ) {
+          cacheLetter = totalNote;
           for (let i = 0; i < letters.length; i++) {
             const el = letters[i];
             if (el.textContent === item.string) {
-              const numStr = item.value.toString()
-              var randomLetter = $('<span>')
+              const numStr = item.value.toString();
+              var randomLetter = $("<span>");
               for (let i = 0; i < numStr.length; i++) {
                 if (i === 0) {
                   if (parseInt(numStr[i]) % 3 == 1) {
-                    randomLetter.append($("<span>").text('&=='));
+                    randomLetter.append($("<span>").text("'&=="));
                   } else if (parseInt(numStr[i]) % 3 == 2) {
-                    randomLetter.append($("<span>").text('¯=='));
+                    randomLetter.append($("<span>").text("'¯=="));
                     // randomLetter += "¯==";
                   } else {
-                    randomLetter.append($("<span>").text('ÿ=='));
+                    randomLetter.append($("<span>").text("'ÿ=="));
                     // randomLetter += "ÿ==";
                   }
                 } else if (i !== numStr.length - 1) {
                   if (parseInt(numStr[0]) % 3 == 1) {
-                    randomLetter.append($("<span>").addClass('color-green').text(treble[parseInt(numStr[i]) - 1])).append($("<span>").text("="))
+                    randomLetter
+                      .append(
+                        $("<span>")
+                          .css("color", "green")
+                          .addClass("color-green")
+                          .text(treble[parseInt(numStr[i]) - 1])
+                      )
+                      .append($("<span>").text("="));
                     // randomLetter += treble[parseInt(numStr[i]) - 1] + "=";
                   } else if (parseInt(numStr[0]) % 3 == 2) {
-                    randomLetter.append($("<span>").addClass('color-green').text(bass[parseInt(numStr[i]) - 1])).append($("<span>").text("="))
+                    randomLetter
+                      .append(
+                        $("<span>")
+                          .css("color", "green")
+                          .addClass("color-green")
+                          .text(bass[parseInt(numStr[i]) - 1])
+                      )
+                      .append($("<span>").text("="));
                     // randomLetter.append(<span>{bass[parseInt(numStr[i]) - 1]}</span>).append(<span>=</span>)
                     // randomLetter += bass[parseInt(numStr[i]) - 1] + "=";
                   } else {
-                    randomLetter.append($("<span>").addClass('color-green').css('color', 'green').text(alto[parseInt(numStr[i]) - 1])).append($("<span>").text("="))
+                    randomLetter
+                      .append(
+                        $("<span>")
+                          .addClass("color-green")
+                          .css("color", "green")
+                          .text(alto[parseInt(numStr[i]) - 1])
+                      )
+                      .append($("<span>").text("="));
                     // randomLetter.append(<span>{alto[parseInt(numStr[i]) - 1]}</span>).append(<span>=</span>)
                     // randomLetter += alto[parseInt(numStr[i]) - 1] + "=";
                   }
                 } else {
                   if (parseInt(numStr[0]) % 3 == 1) {
-                    randomLetter.append($("<span>").addClass('color-green').text(treble[parseInt(numStr[i]) - 1])).append($("<span>").text("=."))
+                    randomLetter
+                      .append(
+                        $("<span>")
+                          .addClass("color-green")
+                          .text(treble[parseInt(numStr[i]) - 1])
+                      )
+                      .append($("<span>").text("=."));
                     // randomLetter.append(<span>{treble[parseInt(numStr[i]) - 1]}</span>).append(<span>=.</span>)
                     // randomLetter += treble[parseInt(numStr[i]) - 1] + "=.";
                   } else if (parseInt(numStr[0]) % 3 == 2) {
-                    randomLetter.append($("<span>").addClass('color-green').text(bass[parseInt(numStr[i]) - 1])).append($("<span>").text("=."))
+                    randomLetter
+                      .append(
+                        $("<span>")
+                          .addClass("color-green")
+                          .text(bass[parseInt(numStr[i]) - 1])
+                      )
+                      .append($("<span>").text("=."));
                     // randomLetter.append(<span>{bass[parseInt(numStr[i]) - 1]}</span>).append(<span>=.</span>)
                     // randomLetter += bass[parseInt(numStr[i]) - 1] + "=.";
                   } else {
-                    randomLetter.append($("<span>").addClass('color-green').text(alto[parseInt(numStr[i]) - 1])).append($("<span>").text("=."))
+                    randomLetter
+                      .append(
+                        $("<span>")
+                          .addClass("color-green")
+                          .text(alto[parseInt(numStr[i]) - 1])
+                      )
+                      .append($("<span>").text("=."));
                     // randomLetter.append(<span>{alto[parseInt(numStr[i]) - 1]}</span>).append(<span>=.</span>)
                     // randomLetter += alto[parseInt(numStr[i]) - 1] + "=.";
                   }
                 }
               }
-              console.log(randomLetter)
-              $(el).empty()
-              $(el).html(randomLetter)
+              console.log(randomLetter);
+              $(el).empty();
+              $(el).html(randomLetter);
             }
           }
         }
       }
-    })
+    });
   } else {
     musicArry.forEach((item, index) => {
-      console.log(sevenTone[letter], item.value)
-      if(sevenTone[letter].indexOf(item.value) !== -1)    {
-        console.log("you are right.")
-        musicArry.splice(musicArry.indexOf(item), 1)
+      console.log(sevenTone[letter], item.value);
+      if (sevenTone[letter].indexOf(item.value) !== -1) {
+        console.log("you are right.");
+        musicArry.splice(musicArry.indexOf(item), 1);
         for (let i = 0; i < letters.length; i++) {
           const el = letters[i];
           if (el.textContent === item.string) {
@@ -164,81 +213,124 @@ function checkLetter(letter) {
           }
         }
         return;
-      } else if(sevenTone[letter].indexOf(parseInt(item.value.toString().substring(0,2))) !== -1) {
-        cacheLetter = parseInt(item.value.toString().substring(0,2))
-        console.log(letter)
-        console.log(item)
+      } else if (
+        sevenTone[letter].indexOf(
+          parseInt(item.value.toString().substring(0, 2))
+        ) !== -1
+      ) {
+        cacheLetter = parseInt(item.value.toString().substring(0, 2));
+        console.log(cacheLetter);
+        console.log(letter);
+        console.log(item);
         for (let i = 0; i < letters.length; i++) {
           const el = letters[i];
           if (el.textContent === item.string) {
-            const numStr = item.value.toString()
-            var randomLetter = $('<span>')
+            const numStr = item.value.toString();
+            var randomLetter = $("<span>");
             for (let i = 0; i < numStr.length; i++) {
               if (i === 0) {
                 if (parseInt(numStr[i]) % 3 == 1) {
-                  randomLetter.append($("<span>").text('&=='));
+                  randomLetter.append($("<span>").text("'&=="));
                 } else if (parseInt(numStr[i]) % 3 == 2) {
-                  randomLetter.append($("<span>").text('¯=='));
+                  randomLetter.append($("<span>").text("'¯=="));
                   // randomLetter += "¯==";
                 } else {
-                  randomLetter.append($("<span>").text('ÿ=='));
+                  randomLetter.append($("<span>").text("'ÿ=="));
                   // randomLetter += "ÿ==";
                 }
               } else if (i !== numStr.length - 1) {
                 if (parseInt(numStr[0]) % 3 == 1) {
-                  randomLetter.append($("<span>").addClass('color-green').text(treble[parseInt(numStr[i]) - 1])).append($("<span>").text("="))
+                  randomLetter
+                    .append(
+                      $("<span>")
+                        .css("color", "green")
+                        .addClass("color-green")
+                        .text(treble[parseInt(numStr[i]) - 1])
+                    )
+                    .append($("<span>").text("="));
                   // randomLetter += treble[parseInt(numStr[i]) - 1] + "=";
                 } else if (parseInt(numStr[0]) % 3 == 2) {
-                  randomLetter.append($("<span>").addClass('color-green').text(bass[parseInt(numStr[i]) - 1])).append($("<span>").text("="))
+                  randomLetter
+                    .append(
+                      $("<span>")
+                        .css("color", "green")
+                        .addClass("color-green")
+                        .text(bass[parseInt(numStr[i]) - 1])
+                    )
+                    .append($("<span>").text("="));
                   // randomLetter.append(<span>{bass[parseInt(numStr[i]) - 1]}</span>).append(<span>=</span>)
                   // randomLetter += bass[parseInt(numStr[i]) - 1] + "=";
                 } else {
-                  randomLetter.append($("<span>").addClass('color-green').css('color', 'green').text(alto[parseInt(numStr[i]) - 1])).append($("<span>").text("="))
+                  randomLetter
+                    .append(
+                      $("<span>")
+                        .addClass("color-green")
+                        .css("color", "green")
+                        .text(alto[parseInt(numStr[i]) - 1])
+                    )
+                    .append($("<span>").text("="));
                   // randomLetter.append(<span>{alto[parseInt(numStr[i]) - 1]}</span>).append(<span>=</span>)
                   // randomLetter += alto[parseInt(numStr[i]) - 1] + "=";
                 }
               } else {
                 if (parseInt(numStr[0]) % 3 == 1) {
-                  randomLetter.append($("<span>").addClass('color-green').text(treble[parseInt(numStr[i]) - 1])).append($("<span>").text("=."))
+                  randomLetter
+                    .append(
+                      $("<span>")
+                        .addClass("color-green")
+                        .text(treble[parseInt(numStr[i]) - 1])
+                    )
+                    .append($("<span>").text("=."));
                   // randomLetter.append(<span>{treble[parseInt(numStr[i]) - 1]}</span>).append(<span>=.</span>)
                   // randomLetter += treble[parseInt(numStr[i]) - 1] + "=.";
                 } else if (parseInt(numStr[0]) % 3 == 2) {
-                  randomLetter.append($("<span>").addClass('color-green').text(bass[parseInt(numStr[i]) - 1])).append($("<span>").text("=."))
+                  randomLetter
+                    .append(
+                      $("<span>")
+                        .addClass("color-green")
+                        .text(bass[parseInt(numStr[i]) - 1])
+                    )
+                    .append($("<span>").text("=."));
                   // randomLetter.append(<span>{bass[parseInt(numStr[i]) - 1]}</span>).append(<span>=.</span>)
                   // randomLetter += bass[parseInt(numStr[i]) - 1] + "=.";
                 } else {
-                  randomLetter.append($("<span>").addClass('color-green').text(alto[parseInt(numStr[i]) - 1])).append($("<span>").text("=."))
+                  randomLetter
+                    .append(
+                      $("<span>")
+                        .addClass("color-green")
+                        .text(alto[parseInt(numStr[i]) - 1])
+                    )
+                    .append($("<span>").text("=."));
                   // randomLetter.append(<span>{alto[parseInt(numStr[i]) - 1]}</span>).append(<span>=.</span>)
                   // randomLetter += alto[parseInt(numStr[i]) - 1] + "=.";
                 }
               }
             }
-            console.log(randomLetter)
-            $(el).empty()
-            $(el).html(randomLetter)
+            console.log(randomLetter);
+            $(el).empty();
+            $(el).html(randomLetter);
           }
         }
       } else {
-        console.log("You are Wrong")
-        if(index === musicArry.length - 1) {
+        console.log("You are Wrong");
+        if (index === musicArry.length - 1) {
           live--;
-          if(live === 0) {
-            clearInterval(interval)
+          if (live === 0) {
+            clearInterval(interval);
           }
-          console.log(live)
+          console.log(live);
           return;
         }
       }
-    })
-    if(live === 0) {
-      clearInterval(interval)
-      alert("Game Over")
+    });
+    if (live === 0) {
+      clearInterval(interval);
+      alert("Game Over");
     }
   }
-  
 }
 function generateMusicNote() {
-  const randomNum = generateRandomNumber([1, 3]);
+  const randomNum = generateRandomNumber([1, 2, 3]);
   // const randomNum = generateRandomNumber([1, 2, 3]);
   var randomLetter = "'";
   const numStr = String(randomNum);
@@ -272,8 +364,8 @@ function generateMusicNote() {
     }
   }
   moveLetter({
-    value : randomNum,
-    string : randomLetter
+    value: randomNum,
+    string: randomLetter,
   });
   musicArry.push({
     value: randomNum,
@@ -297,15 +389,15 @@ $(document).on("click", "#start_btn", function () {
     if (index < 3 && live > 0) {
       // Output the word
       generateMusicNote();
-      console.log(musicArry)
+      console.log(musicArry);
       // Increment the index for the next word
       index++;
     } else {
-      console.log(live)
+      console.log(live);
       // Stop the interval when all words have been displayed
       clearInterval(interval);
-      if(live == 0) {
-        alert("Game OVER")
+      if (live == 0) {
+        alert("Game OVER");
       }
     }
   }
