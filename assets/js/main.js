@@ -106,7 +106,7 @@ function checkLetter(letter) {
           }
           return;
         } else if (
-          totalNote.toString().length < item.value &&
+          totalNote.toString().length < item.value.toString().length &&
           totalNote.toString() ===
             item.value.toString().substring(0, totalNote.toString().length)
         ) {
@@ -132,8 +132,7 @@ function checkLetter(letter) {
                     randomLetter
                       .append(
                         $("<span>")
-                          .css("color", "green")
-                          .addClass("color-green")
+                          .css("color",  cacheLetter.toString().length >= i + 1 ?  "green": "")
                           .text(treble[parseInt(numStr[i]) - 1])
                       )
                       .append($("<span>").text("="));
@@ -142,8 +141,8 @@ function checkLetter(letter) {
                     randomLetter
                       .append(
                         $("<span>")
-                          .css("color", "green")
-                          .addClass("color-green")
+                          .css("color",  cacheLetter.toString().length >= i + 1 ?  "green": "")
+                          // .css("color", "green")
                           .text(bass[parseInt(numStr[i]) - 1])
                       )
                       .append($("<span>").text("="));
@@ -153,8 +152,8 @@ function checkLetter(letter) {
                     randomLetter
                       .append(
                         $("<span>")
-                          .addClass("color-green")
-                          .css("color", "green")
+                          .css("color",  cacheLetter.toString().length >= i + 1 ?  "green": "")
+                          // .css("color", "green")
                           .text(alto[parseInt(numStr[i]) - 1])
                       )
                       .append($("<span>").text("="));
@@ -200,6 +199,14 @@ function checkLetter(letter) {
               $(el).html(randomLetter);
             }
           }
+        } else {
+          live--;
+          cacheLetter = 0;
+          $("#symbol_container > span").each(function(index) {
+            // Change the content of the span tag
+            console.log(index)
+            $(this).text(musicArry[index].string);
+          });
         }
       }
     });
@@ -247,7 +254,7 @@ function checkLetter(letter) {
                   randomLetter
                     .append(
                       $("<span>")
-                        .css("color", "green")
+                        .css("color", i == 1 ?  "green" : "")
                         .addClass("color-green")
                         .text(treble[parseInt(numStr[i]) - 1])
                     )
@@ -257,7 +264,7 @@ function checkLetter(letter) {
                   randomLetter
                     .append(
                       $("<span>")
-                        .css("color", "green")
+                        .css("color", i == 1 ?  "green" : "")
                         .addClass("color-green")
                         .text(bass[parseInt(numStr[i]) - 1])
                     )
@@ -269,7 +276,7 @@ function checkLetter(letter) {
                     .append(
                       $("<span>")
                         .addClass("color-green")
-                        .css("color", "green")
+                        .css("color", i == 1 ?  "green" : "")
                         .text(alto[parseInt(numStr[i]) - 1])
                     )
                     .append($("<span>").text("="));
