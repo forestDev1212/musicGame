@@ -43,7 +43,6 @@ $(window).on("load", function () {
   }, 3000);
 });
 
-$("#lives_remaining").text(live);
 
 /**
  * function for add score and display it on score board
@@ -478,12 +477,8 @@ function generateMusicNote(tones = [1, 2, 3], level = 1) {
  */
 
 $(document).ready(function () {
-  const randomNum = generateRandomNumber([1, 2, 3]);
+  $("#lives_remaining").text(live);
 
-  // musicArry.push({
-  //   value : randomNum,
-  //   string : randomLetter
-  // })
 });
 
 /**
