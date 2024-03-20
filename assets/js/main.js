@@ -1,5 +1,6 @@
 var musicArry = [];
 var live = 3;
+var score = 0
 $("#lives_remaining").text(live);
 var cacheLetter = 0;
 const treble = ["R", "S", "T", "U", "V", "W", "X"];
