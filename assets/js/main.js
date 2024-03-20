@@ -488,11 +488,18 @@ function generateMusicNote(tones = [1, 2, 3], level = 1) {
 
 function saveScore() {
   const userName = $("#username").val();
+  console.log(window.localStorage.getItem('score'))
+  const savedScore = JSON.parse(window.localStorage.getItem('score')) || []
   const scoreList = {
     userName: userName,
     score: score,
   };
-  window.localStorage.setItem("score", scoreList);
+  savedScore.push(scoreList)
+  window.localStorage.setItem("score", JSON.stringify(savedScore));
+}
+
+function viewScoreList() {
+  const scoreList = JSON.parse(window.localStorage.getItem('score'))
 }
 
 function gameOver() {}
