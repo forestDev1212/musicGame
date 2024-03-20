@@ -1,18 +1,17 @@
-var musicArry = [];
-var live = 3;
-var score = 0;
-$("#lives_remaining").text(live);
-var cacheLetter = 0;
-const treble = ["R", "S", "T", "U", "V", "W", "X"];
-const bass = ["W", "X", "Y", "Z", "[", "\\", "]"];
-const alto = ["X", "Y", "Z", "[", "\\", "]", "^"];
+/**
+ * Declare Constants
+ * 
+ */
+var musicArry = [];  //currently showing music notes
+var live = 3; //live
+var score = 0; //total score
+var cacheLetter = 0; //selected letter's cache value
+const treble = ["R", "S", "T", "U", "V", "W", "X"]; //letters for treble tone
+const bass = ["W", "X", "Y", "Z", "[", "\\", "]"]; //letters for bass tone
+const alto = ["X", "Y", "Z", "[", "\\", "]", "^"]; //letters for alto tone
 let interval;
 
-$(window).on("load", function () {
-  setTimeout(() => {
-    $(".loading").fadeOut(3000);
-  }, 3000);
-});
+//Each Tones
 const C = [11, 21, 31];
 const D = [12, 22, 32];
 const E = [13, 23, 33];
@@ -21,6 +20,7 @@ const G = [15, 25, 35];
 const A = [16, 26, 36];
 const B = [17, 27, 37];
 
+//sevenTone Object
 const sevenTone = {
   C: [11, 21, 31],
   D: [12, 22, 32],
@@ -31,10 +31,31 @@ const sevenTone = {
   B: [17, 27, 37],
 };
 
+//Function for preload Image
+
+$(window).on("load", function () {
+  setTimeout(() => {
+    $(".loading").fadeOut(3000);
+  }, 3000);
+});
+
+$("#lives_remaining").text(live);
+
+/**
+ * function for add score and display it on score board
+ */
 function addScore() {
   score += 15;
   $("#score").text(score);
 }
+
+/**
+ * moveLetter function
+ * here param is for showing letter
+ * @param {*} letterObject 
+ */
+
+
 function moveLetter(letterObject) {
   const lettersContainer = document.getElementById("symbol_container");
   const newNote = document.createElement("span");
@@ -54,6 +75,13 @@ function moveLetter(letterObject) {
   });
 }
 
+/**
+ * to generate Random numbers
+ * @param {*} clefArray for tone Clef Array
+ * @param {*} level for level
+ * @returns 
+ */
+
 function generateRandomNumber(clefArray, level = 1) {
   // Generate random length between 2 and maxLength
   const length = Math.floor(Math.random() * level) + 2;
@@ -69,7 +97,10 @@ function generateRandomNumber(clefArray, level = 1) {
   return randomNumber;
 }
 
-function resetNotes() {}
+/**
+ * function for check letter if press music note button 
+ * @param {*} letter 
+ */
 
 function checkLetter(letter) {
   const letters = document.querySelectorAll(".letter");
@@ -376,7 +407,15 @@ function checkLetter(letter) {
     }
   }
 }
+
 function gamerOver() {}
+
+/**
+ * function for generateMusicNotes
+ * @param {*} tones 
+ * @param {*} level 
+ */
+
 function generateMusicNote(tones = [1, 2, 3], level = 1) {
   const randomNum = generateRandomNumber(tones, level);
   // const randomNum = generateRandomNumber([1, 2, 3]);
@@ -421,6 +460,10 @@ function generateMusicNote(tones = [1, 2, 3], level = 1) {
   });
 }
 
+/**
+ * when document is ready
+ */
+
 $(document).ready(function () {
   const randomNum = generateRandomNumber([1, 2, 3]);
 
@@ -429,6 +472,10 @@ $(document).ready(function () {
   //   string : randomLetter
   // })
 });
+
+/**
+ * 
+ */
 
 $(document).on(
   "click",
