@@ -106,6 +106,7 @@ function generateRandomNumber(clefArray, level = 1) {
 function resetMusicNoteArry() {
   $("#symbol_container > span").each(function (index) {
     // Change the content of the span tag
+    console.log(index)
     $(this).text(musicArry[index].string);
   });
 }
@@ -294,6 +295,8 @@ function checkLetter(letter) {
           if (el.textContent === item.string) {
             el.remove();
             addScore();
+            cacheLetter = 0;
+            resetMusicNoteArry()
             return; // Exit the loop after removing the first matching letter
           }
         }
@@ -421,51 +424,7 @@ function checkLetter(letter) {
   if (noteIndex === LEVEL_1_NUMBER && musicArry.length === 0) {
     alert("the level 1 completed.");
     noteIndex++;
-    let tones = [1, 2, 3]
-      console.log(true);
-      // let noteIndex = 0;
-      function outputMusicNote() {
-        console.log(noteIndex)
-        // Check if all words have been displayed
-        if (noteIndex < LEVEL_1_NUMBER && live > 0) {
-          // Output the word
-          generateMusicNote(tones, 1);
-          $("#level").text(1);
-          // Increment the noteIndex for the next word
-          noteIndex++;
-        } else if (
-          LEVEL_2_NUMBER > noteIndex &&
-          noteIndex >= LEVEL_1_NUMBER &&
-          live > 0
-        ) {
-          // if(noteIndex === 3 ) {
-          //   clearInterval(interval)
-          //   alert("Click here to continue")
-          //   interval = setInterval(outputMusicNote, 3000)
-          // }
-          if (noteIndex === LEVEL_1_NUMBER) {
-            clearInterval(interval);
-            if (musicArry.length === 0) {
-              alert("Level 1 complete.");
-              generateMusicNote(tones, 2);
-              $("#level").text(2);
-              noteIndex++;
-            }
-          }
-        } else if (noteIndex >= LEVEL_2_NUMBER && live > 0) {
-          $("#level").text(3);
-          generateMusicNote(tones, 3);
-          noteIndex++;
-        } else {
-          // Stop the interval when all words have been displayed
-          clearInterval(interval);
-          $("#lives_remaining").text(live);
-          if (live === 0) {
-            alert("Game OVER");
-          }
-        }
-      }
-      interval = setInterval(outputMusicNote, 3000);
+    modal.style.display = "block";
   } else if (noteIndex === LEVEL_2_NUMBER && musicArry.length === 0) {
     alert("the level 2 completed.");
     noteIndex++;
@@ -524,56 +483,6 @@ function generateMusicNote(tones = [1, 2, 3], level = 1) {
   });
 }
 
-/**
- *
- * @param {*} mode
- * @param {*} tones
- */
-// function continueGame(mode = 3000, tones = [1, 2, 3]) {
-//   console.log(true);
-//   // let noteIndex = 0;
-//   function outputMusicNote() {
-//     // Check if all words have been displayed
-//     if (noteIndex < LEVEL_1_NUMBER && live > 0) {
-//       // Output the word
-//       generateMusicNote(tones, 1);
-//       $("#level").text(1);
-//       // Increment the noteIndex for the next word
-//       noteIndex++;
-//     } else if (
-//       LEVEL_2_NUMBER > noteIndex &&
-//       noteIndex >= LEVEL_1_NUMBER &&
-//       live > 0
-//     ) {
-//       // if(noteIndex === 3 ) {
-//       //   clearInterval(interval)
-//       //   alert("Click here to continue")
-//       //   interval = setInterval(outputMusicNote, 3000)
-//       // }
-//       if (noteIndex === LEVEL_1_NUMBER) {
-//         clearInterval(interval);
-//         if (musicArry.length === 0) {
-//           alert("Level 1 complete.");
-//           generateMusicNote(tones, 2);
-//           $("#level").text(2);
-//           noteIndex++;
-//         }
-//       }
-//     } else if (noteIndex >= LEVEL_2_NUMBER && live > 0) {
-//       $("#level").text(3);
-//       generateMusicNote(tones, 3);
-//       noteIndex++;
-//     } else {
-//       // Stop the interval when all words have been displayed
-//       clearInterval(interval);
-//       $("#lives_remaining").text(live);
-//       if (live === 0) {
-//         alert("Game OVER");
-//       }
-//     }
-//   }
-//   interval = setInterval(outputMusicNote, 3000);
-// }
 
 /**
  * when document is ready
@@ -603,11 +512,6 @@ $(document).on("click", "#start_btn", function (mode = 3000, tones = [1, 2, 3]) 
       noteIndex >= LEVEL_1_NUMBER &&
       live > 0
     ) {
-      // if(noteIndex === 3 ) {
-      //   clearInterval(interval)
-      //   alert("Click here to continue")
-      //   interval = setInterval(outputMusicNote, 3000)
-      // }
       if (noteIndex === LEVEL_1_NUMBER) {
         clearInterval(interval);
         if (musicArry.length === 0) {
@@ -635,11 +539,47 @@ $(document).on("click", "#start_btn", function (mode = 3000, tones = [1, 2, 3]) 
 
 $(document).on('click', '#continue_btn', function (mode, tones) {
   modal.style.display = "none";
+  console.log(true);
+  // let noteIndex = 0;
+  function outputMusicNote() {
+    // Check if all words have been displayed
+    if (noteIndex < LEVEL_1_NUMBER && live > 0) {
+      // Output the word
+      generateMusicNote(tones, 1);
+      $("#level").text(1);
+      // Increment the noteIndex for the next word
+      noteIndex++;
+    } else if (
+      LEVEL_2_NUMBER > noteIndex &&
+      noteIndex >= LEVEL_1_NUMBER &&
+      live > 0
+    ) {
+      if (noteIndex === LEVEL_1_NUMBER) {
+        clearInterval(interval);
+      } else {
+        generateMusicNote(tones, 2);
+          $("#level").text(2);
+          noteIndex++;
+      }
+    } else if (noteIndex >= LEVEL_2_NUMBER && live > 0) {
+      if (noteIndex === LEVEL_2_NUMBER) {
+        clearInterval(interval);
+      } else {
+        generateMusicNote(tones, 2);
+          $("#level").text(2);
+          noteIndex++;
+      }
+    } else {
+      // Stop the interval when all words have been displayed
+      clearInterval(interval);
+      $("#lives_remaining").text(live);
+      if (live === 0) {
+        alert("Game OVER");
+      }
+    }
+  }
+  interval = setInterval(outputMusicNote, 3000);
 })
-
-if (noteIndex === 3 && musicArry.length === 0) {
-  alert("the level 1 complete");
-}
 
 
 // Get the button that opens the modal
