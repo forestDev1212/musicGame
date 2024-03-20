@@ -63,6 +63,10 @@ function generateRandomNumber(clefArray) {
   return randomNumber;
 }
 
+function resetNotes() {
+  
+}
+
 function checkLetter(letter) {
   console.log(letter);
   const letters = document.querySelectorAll(".letter");
