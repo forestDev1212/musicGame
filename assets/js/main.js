@@ -78,7 +78,7 @@ function checkLetter(letter) {
     var included = false;
     var matched = false;
     musicArry.forEach((item, index) => {
-      if (sevenTone[letter].indexOf(item.value) !== -1) {
+      if (sevenTone[letter].indexOf(item.value) !== -1 && matched === false) {
         //The New Button is C and Note is C
         console.log("you are right.");
         musicArry.splice(musicArry.indexOf(item), 1);
@@ -255,7 +255,7 @@ function checkLetter(letter) {
     var included = false;
     musicArry.forEach((item, index) => {
       console.log(sevenTone[letter], item.value);
-      if (sevenTone[letter].indexOf(item.value) !== -1) {
+      if (sevenTone[letter].indexOf(item.value) !== -1 && matched === false) {
         console.log("you are right.");
         matched = true;
         musicArry.splice(musicArry.indexOf(item), 1);
