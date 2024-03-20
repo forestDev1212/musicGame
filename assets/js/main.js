@@ -11,6 +11,8 @@ const bass = ["W", "X", "Y", "Z", "[", "\\", "]"]; //letters for bass tone
 const alto = ["X", "Y", "Z", "[", "\\", "]", "^"]; //letters for alto tone
 let interval;
 let noteIndex = 0;
+let mode = 3;
+let tones = [1, 2, 3]
 const LEVEL_1_NUMBER = 3;
 const LEVEL_2_NUMBER = 10;
 const LEVEL_3_NUMBER = 20;
@@ -34,6 +36,9 @@ const sevenTone = {
   A: [16, 26, 36],
   B: [17, 27, 37],
 };
+
+
+var modal = document.getElementById("option_modal");
 
 //Function for preload Image
 
@@ -416,6 +421,51 @@ function checkLetter(letter) {
   if (noteIndex === LEVEL_1_NUMBER && musicArry.length === 0) {
     alert("the level 1 completed.");
     noteIndex++;
+    let tones = [1, 2, 3]
+      console.log(true);
+      // let noteIndex = 0;
+      function outputMusicNote() {
+        console.log(noteIndex)
+        // Check if all words have been displayed
+        if (noteIndex < LEVEL_1_NUMBER && live > 0) {
+          // Output the word
+          generateMusicNote(tones, 1);
+          $("#level").text(1);
+          // Increment the noteIndex for the next word
+          noteIndex++;
+        } else if (
+          LEVEL_2_NUMBER > noteIndex &&
+          noteIndex >= LEVEL_1_NUMBER &&
+          live > 0
+        ) {
+          // if(noteIndex === 3 ) {
+          //   clearInterval(interval)
+          //   alert("Click here to continue")
+          //   interval = setInterval(outputMusicNote, 3000)
+          // }
+          if (noteIndex === LEVEL_1_NUMBER) {
+            clearInterval(interval);
+            if (musicArry.length === 0) {
+              alert("Level 1 complete.");
+              generateMusicNote(tones, 2);
+              $("#level").text(2);
+              noteIndex++;
+            }
+          }
+        } else if (noteIndex >= LEVEL_2_NUMBER && live > 0) {
+          $("#level").text(3);
+          generateMusicNote(tones, 3);
+          noteIndex++;
+        } else {
+          // Stop the interval when all words have been displayed
+          clearInterval(interval);
+          $("#lives_remaining").text(live);
+          if (live === 0) {
+            alert("Game OVER");
+          }
+        }
+      }
+      interval = setInterval(outputMusicNote, 3000);
   } else if (noteIndex === LEVEL_2_NUMBER && musicArry.length === 0) {
     alert("the level 2 completed.");
     noteIndex++;
@@ -479,7 +529,65 @@ function generateMusicNote(tones = [1, 2, 3], level = 1) {
  * @param {*} mode
  * @param {*} tones
  */
-function continueGame(mode = 3000, tones = [1, 2, 3]) {
+// function continueGame(mode = 3000, tones = [1, 2, 3]) {
+//   console.log(true);
+//   // let noteIndex = 0;
+//   function outputMusicNote() {
+//     // Check if all words have been displayed
+//     if (noteIndex < LEVEL_1_NUMBER && live > 0) {
+//       // Output the word
+//       generateMusicNote(tones, 1);
+//       $("#level").text(1);
+//       // Increment the noteIndex for the next word
+//       noteIndex++;
+//     } else if (
+//       LEVEL_2_NUMBER > noteIndex &&
+//       noteIndex >= LEVEL_1_NUMBER &&
+//       live > 0
+//     ) {
+//       // if(noteIndex === 3 ) {
+//       //   clearInterval(interval)
+//       //   alert("Click here to continue")
+//       //   interval = setInterval(outputMusicNote, 3000)
+//       // }
+//       if (noteIndex === LEVEL_1_NUMBER) {
+//         clearInterval(interval);
+//         if (musicArry.length === 0) {
+//           alert("Level 1 complete.");
+//           generateMusicNote(tones, 2);
+//           $("#level").text(2);
+//           noteIndex++;
+//         }
+//       }
+//     } else if (noteIndex >= LEVEL_2_NUMBER && live > 0) {
+//       $("#level").text(3);
+//       generateMusicNote(tones, 3);
+//       noteIndex++;
+//     } else {
+//       // Stop the interval when all words have been displayed
+//       clearInterval(interval);
+//       $("#lives_remaining").text(live);
+//       if (live === 0) {
+//         alert("Game OVER");
+//       }
+//     }
+//   }
+//   interval = setInterval(outputMusicNote, 3000);
+// }
+
+/**
+ * when document is ready
+ */
+
+$(document).ready(function () {
+  $("#lives_remaining").text(live);
+});
+
+/**
+ *
+ */
+
+$(document).on("click", "#start_btn", function (mode = 3000, tones = [1, 2, 3]) {
   console.log(true);
   // let noteIndex = 0;
   function outputMusicNote() {
@@ -523,28 +631,16 @@ function continueGame(mode = 3000, tones = [1, 2, 3]) {
     }
   }
   interval = setInterval(outputMusicNote, 3000);
-}
-
-/**
- * when document is ready
- */
-
-$(document).ready(function () {
-  $("#lives_remaining").text(live);
 });
 
-/**
- *
- */
-
-$(document).on("click", "#start_btn", continueGame());
+$(document).on('click', '#continue_btn', function (mode, tones) {
+  modal.style.display = "none";
+})
 
 if (noteIndex === 3 && musicArry.length === 0) {
   alert("the level 1 complete");
 }
 
-// Get the modal
-var modal = document.getElementById("option_modal");
 
 // Get the button that opens the modal
 var btn = document.getElementById("option_btn");
